@@ -10,7 +10,7 @@ It allows the user to patch and play his own synthesizer in the webbrowser.
 ### Librarys to use
 - React.js
 - Tone.js https://tonejs.github.io
-- react-dial-knob https://www.npmjs.com/package/react-dial-knob
+- p5.js (react-p5) https://p5js.org
 
 ### Necessary steps for first minimal version
 1. Project setup
