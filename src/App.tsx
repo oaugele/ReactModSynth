@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import * as Tone from "tone";
+import "./App.css";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    // make and start a 440hz sine tone
+    const osc = new Tone.Oscillator(440, "sine").toDestination();
+
+    function toggleTone() {
+        if (osc.state !== "started") {
+            osc.start();
+        } else {
+            osc.stop();
+        }
+    }
+
+    return (
+        <div className="App">
+            <header className="App-header">
+                Hallo Welt
+                <div id="wrapper">
+                    <button id="button" onClick={toggleTone}>
+                        440hz sine
+                    </button>
+                </div>
+            </header>
+        </div>
+    );
 }
 
 export default App;
