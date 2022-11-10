@@ -6,7 +6,6 @@ It allows the user to patch and play his own synthesizer in the webbrowser.
 ### First modules
 - Oscillator
 - Filter
-- Envelope
 
 ### Librarys to use
 - React.js
@@ -19,3 +18,13 @@ It allows the user to patch and play his own synthesizer in the webbrowser.
 3. Providing a GUI for that module
 4. Create a second module (filter)
 5. Implementation of inter-modular signal patching 
+
+### Further modules
+- Envelope
+- VCA
+- Oscilloscope
+
+### Further options
+1. Save configuration (in text file)
+2. MIDI impementation
+3. Native versions (React Native / Electron.js)
