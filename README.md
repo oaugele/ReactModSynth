@@ -11,6 +11,7 @@ It allows the user to patch and play his own synthesizer in the webbrowser.
 - React.js
 - Tone.js https://tonejs.github.io
 - p5.js (react-p5) https://p5js.org
+- React Bootstrap 5 
 
 ### Necessary steps for first minimal version
 1. Project setup
