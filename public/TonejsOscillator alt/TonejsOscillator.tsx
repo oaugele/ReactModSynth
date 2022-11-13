@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+/* import { useState, useEffect } from "react";
 import * as Tone from "tone";
 
 import Card from "react-bootstrap/Card";
@@ -8,49 +8,40 @@ import Button from "react-bootstrap/Button";
 import "./TonejsOscillator.css";
 
 function TonejsOscillator() {
-    const [oscState, setOscState] = useState("on");
-    const [freq, setFreq] = useState(440);
+    const [oscState, setOscState] = useState(false);
+    const [oscBtn, setOscBtn] = useState("start");
+    /* const [freq, setFreq] = useState(440); */
 
+    
     const osc = new Tone.Oscillator().toDestination();
-
+    let freq = 440;
     console.log("useEffect freq:", freq);
     osc.frequency.value = freq;
+    osc.mute = true;
 
-    /*   useEffect(() => {
 
-    }, [osc.frequency, freq]);  */
-
-    console.log("osc :", osc);
-
-    document.querySelector("button")?.addEventListener("click", async () => {
-        await osc.start();
-        console.log("audio is ready");
-    });
-    document.querySelector(".osc-btn")?.addEventListener("click", async () => {
-        if (oscState === "on") {
-            setOscState("off");
-
-            await osc.start();
-            console.log("audio is ready");
-        } else {
-            setOscState("on");
-            osc.stop();
-        }
-    });
-
-    /*     function oscToggle() {
-        if (oscState === "on") {
-            setOscState("off");
+    function oscToggle() {
+        if (oscBtn === "start") {
             osc.start();
+            setOscState(true);
+            setOscBtn("mute");
+            console.log("osc started, oscState: ", oscState);
+        } else if (oscBtn === "mute") {
+            osc.mute = true;
+            setOscState(false);
+            setOscBtn("unmute");
+            console.log("osc muted, oscState: ", oscState);
         } else {
-            setOscState("on");
-            osc.stop();
-        }
-    } */
+            osc.mute = false;
+            setOscState(true);
+            setOscBtn("mute");
 
+            console.log("osc unmuted, oscState: ", oscState);
+        }
+    }
     function changeFreq(e: any) {
         console.log("Frequency: ", e.target.value);
-        setFreq(e.target.value);
+        freq = e.target.value;
     }
 
     return (
@@ -60,11 +51,11 @@ function TonejsOscillator() {
                 value="{oscState}"
                 className="osc-btn"
                 variant="primary"
-                /*                 onClick={() => {
+                onClick={() => {
                     oscToggle();
-                }} */
+                }}
             >
-                {oscState}
+                {oscBtn}
             </Button>
             <ListGroup.Item>
                 <label className="form-label" htmlFor="frequency">
@@ -87,3 +78,4 @@ function TonejsOscillator() {
 }
 
 export default TonejsOscillator;
+ */

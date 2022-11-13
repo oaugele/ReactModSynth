@@ -1,7 +1,6 @@
 import TonejsOscillator from "../TonejsOscillator/TonejsOscillator";
 
 import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
 
 import "./ModuleContainer.css";
 
