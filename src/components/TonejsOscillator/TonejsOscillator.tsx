@@ -13,8 +13,8 @@ function TonejsOscillator() {
     let [type, setType] = useState("sine");
     let [freq, setFreq] = useState(50);
     let [freqSlider, setFreqSlider] = useState(freq);
-    let [vol, setVol] = useState(0);
-    let [volSlider, setVolSlider] = useState(freq);
+    let [detune, setDetune] = useState(0);
+    let [vol, setVol] = useState(-6);
 
     const osc: any = useRef(null);
 
@@ -37,7 +37,6 @@ function TonejsOscillator() {
     }
     console.log(osc.current);
     function changeFreq(e: any) {
-        /* setFreq((osc.current.frequency.value = e.target.value)); */
         setFreq(e.target.value);
         osc.current.frequency.value = Math.pow(freq / 20, 1.55);
         setFreqSlider(
@@ -49,6 +48,11 @@ function TonejsOscillator() {
     function changeVol(e: any) {
         setVol((osc.current.volume.value = e.target.value));
     }
+
+    function changeDetune(e: any) {
+        setDetune((osc.current.detune.value = e.target.value));
+    }
+
     function changeType() {
         const expr = type;
         switch (expr) {
@@ -97,6 +101,7 @@ function TonejsOscillator() {
                     Frequency {freqSlider.toFixed()} Hz
                 </label>
                 <input
+                    value={freq}
                     name="frequency"
                     type="range"
                     className="form-range"
@@ -112,6 +117,7 @@ function TonejsOscillator() {
                 </label>
                 <div className="range">
                     <input
+                        value={vol}
                         name="volume"
                         type="range"
                         className="form-range"
@@ -119,6 +125,23 @@ function TonejsOscillator() {
                         min="-60"
                         max="0"
                         onChange={changeVol}
+                    />
+                </div>
+            </ListGroup.Item>
+            <ListGroup.Item>
+                <label className="form-label" htmlFor="volume">
+                    Detune {detune} %
+                </label>
+                <div className="range">
+                    <input
+                        value={detune}
+                        name="volume"
+                        type="range"
+                        className="form-range"
+                        id="volSlider"
+                        min="-100"
+                        max="100"
+                        onChange={changeDetune}
                     />
                 </div>
             </ListGroup.Item>
