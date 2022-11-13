@@ -1,29 +1,16 @@
 import React from "react";
-import * as Tone from "tone";
+
+import Header from "./components/Header/Header";
+import ModuleContainer from "./components/ModuleContainer/ModuleContainer";
+
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
 function App() {
-    // make and start a 440hz sine tone
-    const osc = new Tone.Oscillator(440, "sine").toDestination();
-
-    function toggleTone() {
-        if (osc.state !== "started") {
-            osc.start();
-        } else {
-            osc.stop();
-        }
-    }
-
     return (
         <div className="App">
-            <header className="App-header">
-                Hallo Welt
-                <div id="wrapper">
-                    <button id="button" onClick={toggleTone}>
-                        440hz sine
-                    </button>
-                </div>
-            </header>
+            <Header />
+            <ModuleContainer />
         </div>
     );
 }
