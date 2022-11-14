@@ -64,8 +64,7 @@ function App() {
                 <Header />
 
                 <TonejsOscillator osc={osc} />
-
-                <TonejsFilter filter={filter} />
+                <TonejsFilter filter={filter} lfo={lfo} />
                 <TonejsLFO lfo={lfo} />
             </div>
         </>

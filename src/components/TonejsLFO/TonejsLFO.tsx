@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 
+import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
@@ -43,33 +44,37 @@ function TonejsLFO(lfo: any) {
 
     return (
         <>
-            <ButtonGroup size="sm">
-                <p>LFO</p>
-                <Button
-                    className="osc-btn"
-                    variant="primary"
-                    onClick={() => {
-                        changeType();
-                    }}
-                >
-                    {type}
-                </Button>
-            </ButtonGroup>
-            <ListGroup.Item>
-                <label className="form-label" htmlFor="frequency">
-                    Frequency {freqSlider.toFixed()} Hz
-                </label>
-                <input
-                    value={freq}
-                    name="frequency"
-                    type="range"
-                    className="form-range"
-                    id="freqSlider"
-                    min="0.5"
-                    max="4000"
-                    onChange={changeFreq}
-                />
-            </ListGroup.Item>
+            <Card style={{ width: "12rem" }} className="module-container">
+                <Card.Body className="text-center">
+                    <Card.Title>Tone.js LFO</Card.Title>
+                    <ButtonGroup size="sm">
+                        <Button
+                            className="osc-btn"
+                            variant="primary"
+                            onClick={() => {
+                                changeType();
+                            }}
+                        >
+                            {type}
+                        </Button>
+                    </ButtonGroup>
+                    <ListGroup.Item>
+                        <label className="form-label" htmlFor="frequency">
+                            Frequency {freqSlider.toFixed()} Hz
+                        </label>
+                        <input
+                            value={freq}
+                            name="frequency"
+                            type="range"
+                            className="form-range"
+                            id="freqSlider"
+                            min="0.5"
+                            max="4000"
+                            onChange={changeFreq}
+                        />
+                    </ListGroup.Item>
+                </Card.Body>
+            </Card>
         </>
     );
 }
