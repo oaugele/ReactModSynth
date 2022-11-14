@@ -1,5 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { Oscillator } from "tone";
+import { Destination } from "tone";
+
+/* import { Filter } from "tone"; */
 
 import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
@@ -15,13 +18,22 @@ function TonejsOscillator() {
     let [freqSlider, setFreqSlider] = useState(freq);
     let [detune, setDetune] = useState(0);
     let [vol, setVol] = useState(-6);
+    /*     let [filterFreq, setFilterFreq] = useState(50);
+    let [filterFreqSlider, setFilterFreqSlider] = useState(freq); */
 
     const osc: any = useRef(null);
+    /* const filter: any = useRef(null); */
 
     useEffect(() => {
-        osc.current = new Oscillator(freq).toDestination();
+        osc.current = new Oscillator(freq);
         osc.current.type = type;
+        osc.current.connect(Destination);
     }, []);
+
+    /*   useEffect(() => {
+        filter.current = new Filter(filterFreq).toDestination();
+        osc.current.connect(filter.current);
+    }, []); */
 
     function oscToggle() {
         if (oscBtn === "start") {
@@ -35,15 +47,24 @@ function TonejsOscillator() {
             setOscBtn("mute");
         }
     }
-    console.log(osc.current);
+
+    //console.log(osc.current);
+
     function changeFreq(e: any) {
         setFreq(e.target.value);
         osc.current.frequency.value = Math.pow(freq / 20, 1.55);
         setFreqSlider(
             (osc.current.frequency.value = Math.pow(freq / 20, 1.55))
         );
-        console.log(osc.current.frequency.value);
     }
+
+    /*     function changeFilterFreq(e: any) {
+        setFilterFreq(e.target.value);
+        filter.current.frequency.value = Math.pow(filterFreq / 20, 1.55);
+        setFilterFreqSlider(
+            (filter.current.frequency.value = Math.pow(filterFreq / 20, 1.55))
+        );
+    } */
 
     function changeVol(e: any) {
         setVol((osc.current.volume.value = e.target.value));
@@ -145,6 +166,21 @@ function TonejsOscillator() {
                     />
                 </div>
             </ListGroup.Item>
+            {/*             <ListGroup.Item>
+                <label className="form-label" htmlFor="frequency">
+                    Filter Freq {filterFreqSlider.toFixed()} Hz
+                </label>
+                <input
+                    value={filterFreq}
+                    name="frequency"
+                    type="range"
+                    className="form-range"
+                    id="freqSlider"
+                    min="70"
+                    max="6000"
+                    onChange={changeFilterFreq}
+                />
+            </ListGroup.Item> */}
         </>
     );
 }
