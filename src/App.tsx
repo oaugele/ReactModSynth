@@ -1,72 +1,136 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
 
-import { Oscillator, PulseOscillator } from "tone";
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import NavDropdown from "react-bootstrap/NavDropdown";
+import Button from "react-bootstrap/Button";
+import "bootstrap/dist/css/bootstrap.min.css";
+
+import { Oscillator } from "tone";
 import { Filter } from "tone";
 import { LFO } from "tone";
 import { Destination } from "tone";
 
-import Header from "./components/Header/Header";
 import TonejsOscillator from "./components/TonejsOscillator/TonejsOscillator";
 import TonejsFilter from "./components/TonejsFilter/TonejsFilter";
 import TonejsLFO from "./components/TonejsLFO/TonejsLFO";
 
-import Button from "react-bootstrap/Button";
-import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
 function App() {
-    const [oscBtn, setOscBtn] = useState("start");
     const osc: any = useRef(null);
     const filter: any = useRef(null);
     const lfo: any = useRef(null);
+    const [filterModule, setFilterModule] = useState(false);
+    const [oscBtn, setOscBtn] = useState("start");
+    const [soundCard, setSoundCard] = useState("");
+
+    /*  let master = osc; */
 
     useEffect(() => {
         osc.current = new Oscillator();
-        filter.current = new Filter().toDestination();
+        filter.current = new Filter();
         lfo.current = new LFO(5, 400, 4000);
         osc.current.connect(filter.current);
         lfo.current.connect(filter.current.frequency);
-        /* osc.current.connect(Destination); */
-        /* filter.current.connect(Destination); */
-    }, []);
+        if (soundCard === "osc") {
+            osc.current.connect(Destination);
+        } else if (soundCard === "filter") {
+            filter.current.connect(Destination);
+        } else {
+            osc.current.connect(Destination);
+        }
+    }, [soundCard, filterModule]);
 
-    /*    const ModuleProps = {
-        osc: osc.current,
-    };
- */
     function oscToggle() {
         if (oscBtn === "start") {
             osc.current.start();
             lfo.current.start();
-            setOscBtn("mute");
-        } else if (oscBtn === "mute") {
-            osc.current.mute = true;
-            setOscBtn("unmute");
+            setOscBtn("stop");
         } else {
-            osc.current.mute = false;
-            setOscBtn("mute");
+            osc.current.stop();
+            lfo.current.stop();
+            setOscBtn("start");
         }
     }
-    console.log("Parent: ", osc);
+    function filterToggle() {
+        if (filterModule === false) {
+            osc.current.stop();
+            setFilterModule(true);
+            setSoundCard("filter");
+            setOscBtn("start");
+        } else {
+            osc.current.stop();
+            setFilterModule(false);
+            setSoundCard("osc");
+            setOscBtn("start");
+        }
+    }
+
+    function showFilter() {
+        if (filterModule === false) {
+            return (
+                <>
+                    <TonejsOscillator osc={osc} />
+                </>
+            );
+        } else if (filterModule === true) {
+            return (
+                <>
+                    <TonejsOscillator osc={osc} />
+                    <TonejsFilter filter={filter} lfo={lfo} />;
+                </>
+            );
+        }
+    }
+
     return (
         <>
-            <div className="App">
-                <Button
-                    className="osc-btn"
-                    variant="primary"
-                    onClick={() => {
-                        oscToggle();
-                    }}
-                >
-                    {oscBtn}
-                </Button>
-                <Header />
+            <Navbar expand="md">
+                <Container fluid>
+                    <Button
+                        className="osc-btn"
+                        variant="primary"
+                        onClick={() => {
+                            oscToggle();
+                        }}
+                    >
+                        {oscBtn}
+                    </Button>
+                    <Navbar.Toggle aria-controls="navbarScroll" />
+                    <Navbar.Collapse id="navbarScroll">
+                        <Nav className="me-auto my-2 my-lg-0" navbarScroll>
+                            <NavDropdown
+                                title="Toggle modules: "
+                                id="navbarScrollingDropdown"
+                            >
+                                <NavDropdown.Item
+                                    onClick={() => {
+                                        filterToggle();
+                                    }}
+                                >
+                                    Filter {filterModule}
+                                </NavDropdown.Item>
+                                <NavDropdown.Item
+                                    onClick={() => {
+                                        /* filterToggle(); */
+                                    }}
+                                >
+                                    LFO
+                                </NavDropdown.Item>
+                                <NavDropdown.Divider />
+                            </NavDropdown>
+                        </Nav>
+                    </Navbar.Collapse>
+                </Container>
+            </Navbar>
 
-                <TonejsOscillator osc={osc} />
-                <TonejsFilter filter={filter} lfo={lfo} />
-                <TonejsLFO lfo={lfo} />
-            </div>
+            {/*                 <TonejsOscillator osc={osc} />
+                <TonejsFilter filter={filter} lfo={lfo} /> */}
+            {showFilter()}
+            <TonejsLFO lfo={lfo} />
         </>
     );
 }
