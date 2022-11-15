@@ -1,31 +1,17 @@
-# React Modular Synthesizer
+# React Modular Synthesizer Ver. 0.1
 
-A javascript based modular expandable sythesizer built with react.
+A javascript based (semi) modular expandable sythesizer built with react.
 It allows the user to patch and play his own synthesizer in the webbrowser.
 
 ### First modules
 - Oscillator
 - Filter
+- LFO
 
-### Librarys to use
+### Used librarys
 - React.js
+- Typescript
 - Tone.js https://tonejs.github.io
-- p5.js (react-p5) https://p5js.org
 - React Bootstrap 5 https://react-bootstrap.github.io/
 
-### Necessary steps for first minimal version
-1. Project setup
-2. Embedding a tone.js function in a react component for first module (oscillator)
-3. Providing a GUI for that module
-4. Create a second module (filter)
-5. Implementation of inter-modular signal patching 
 
-### Further modules
-- Envelope
-- VCA
-- Oscilloscope
-
-### Further options
-1. Save configuration (in text file)
-2. MIDI impementation
-3. Native versions (React Native / Electron.js)
