@@ -24,47 +24,76 @@ function App() {
     const filter: any = useRef(null);
     const lfo: any = useRef(null);
     const [filterModule, setFilterModule] = useState(false);
+    const [lfoModule, setLfoModule] = useState(false);
     const [oscBtn, setOscBtn] = useState("start");
     const [soundCard, setSoundCard] = useState("");
-
-    /*  let master = osc; */
+    const [lfoState, setLfoState] = useState("");
 
     useEffect(() => {
         osc.current = new Oscillator();
         filter.current = new Filter();
         lfo.current = new LFO(5, 400, 4000);
-        osc.current.connect(filter.current);
-        lfo.current.connect(filter.current.frequency);
+
         if (soundCard === "osc") {
             osc.current.connect(Destination);
         } else if (soundCard === "filter") {
+            osc.current.connect(filter.current);
             filter.current.connect(Destination);
         } else {
             osc.current.connect(Destination);
         }
-    }, [soundCard, filterModule]);
+        if (lfoState === "oscFreq") {
+            lfo.current.connect(osc.current.frequency);
+        } else if (lfoState === "oscVol") {
+            lfo.current.connect(osc.current.volume);
+        } else if (lfoState === "filterFreq") {
+            lfo.current.connect(filter.current.frequency);
+        } else {
+            lfo.current.stop();
+        }
+    }, [soundCard, filterModule, lfoState]);
+
+    let oscStop = function () {
+        osc.current.stop();
+        lfo.current.stop();
+        setOscBtn("start");
+        return;
+    };
 
     function oscToggle() {
+        oscStop();
         if (oscBtn === "start") {
             osc.current.start();
-            lfo.current.start();
+            if (lfoModule) {
+                lfo.current.start();
+            } else {
+                setLfoState("");
+            }
             setOscBtn("stop");
         } else {
-            osc.current.stop();
-            lfo.current.stop();
             setOscBtn("start");
         }
     }
     function filterToggle() {
-        if (filterModule === false) {
-            osc.current.stop();
+        oscStop();
+        if (!filterModule) {
             setFilterModule(true);
             setSoundCard("filter");
             setOscBtn("start");
         } else {
-            osc.current.stop();
             setFilterModule(false);
             setSoundCard("osc");
+            setOscBtn("start");
+        }
+    }
+    function lfoToggle() {
+        oscStop();
+        if (lfoModule) {
+            setLfoModule(false);
+            setOscBtn("start");
+            setLfoState("");
+        } else {
+            setLfoModule(true);
             setOscBtn("start");
         }
     }
@@ -80,7 +109,23 @@ function App() {
             return (
                 <>
                     <TonejsOscillator osc={osc} />
-                    <TonejsFilter filter={filter} lfo={lfo} />;
+                    <TonejsFilter filter={filter} lfo={lfo} />
+                </>
+            );
+        }
+    }
+
+    function showLfo() {
+        if (lfoModule) {
+            return (
+                <>
+                    <TonejsLFO
+                        oscStop={oscStop}
+                        lfo={lfo}
+                        lfoState={lfoState}
+                        setLfoState={setLfoState}
+                        setOscBtn={setOscBtn}
+                    />
                 </>
             );
         }
@@ -115,10 +160,17 @@ function App() {
                                 </NavDropdown.Item>
                                 <NavDropdown.Item
                                     onClick={() => {
-                                        /* filterToggle(); */
+                                        lfoToggle();
                                     }}
                                 >
                                     LFO
+                                </NavDropdown.Item>
+                                <NavDropdown.Item
+                                    onClick={() => {
+                                        oscStop();
+                                    }}
+                                >
+                                    Filter freq
                                 </NavDropdown.Item>
                                 <NavDropdown.Divider />
                             </NavDropdown>
@@ -126,11 +178,8 @@ function App() {
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
-
-            {/*                 <TonejsOscillator osc={osc} />
-                <TonejsFilter filter={filter} lfo={lfo} /> */}
             {showFilter()}
-            <TonejsLFO lfo={lfo} />
+            {showLfo()}
         </>
     );
 }

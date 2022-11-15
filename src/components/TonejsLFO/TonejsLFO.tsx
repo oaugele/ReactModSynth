@@ -4,21 +4,34 @@ import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
+import DropdownButton from "react-bootstrap/DropdownButton";
+import Dropdown from "react-bootstrap/Dropdown";
 
 import "./TonejsLFO.css";
 
-function TonejsLFO(lfo: any) {
+interface lfoProps {
+    oscStop: any;
+    lfo: any;
+    lfoState: string;
+    setLfoState: any;
+    setOscBtn: any;
+}
+
+function TonejsLFO(props: lfoProps) {
+    //let [lfoState, setlfoState] = useState("oscFreq");
     let [type, setType] = useState("sine");
     let [freq, setFreq] = useState(50);
     let [freqSlider, setFreqSlider] = useState(freq);
 
-    useEffect(() => {}, []);
+    useEffect(() => {
+        props.setLfoState("oscFreq");
+    }, []);
 
     function changeFreq(e: any) {
         setFreq(e.target.value);
-        lfo.lfo.current.frequency.value = Math.pow(freq / 20, 1.55);
+        props.lfo.current.frequency.value = Math.pow(freq / 20, 1.55);
         setFreqSlider(
-            (lfo.lfo.current.frequency.value = Math.pow(freq / 20, 1.55))
+            (props.lfo.current.frequency.value = Math.pow(freq / 20, 1.55))
         );
     }
 
@@ -26,27 +39,27 @@ function TonejsLFO(lfo: any) {
         const expr = type;
         switch (expr) {
             case "sine":
-                setType((lfo.lfo.current.type = "square"));
+                setType((props.lfo.current.type = "square"));
                 break;
             case "square":
-                setType((lfo.lfo.current.type = "triangle"));
+                setType((props.lfo.current.type = "triangle"));
                 break;
             case "triangle":
-                setType((lfo.lfo.current.type = "sawtooth"));
+                setType((props.lfo.current.type = "sawtooth"));
                 break;
             case "sawtooth":
-                setType((lfo.lfo.current.type = "sine"));
+                setType((props.lfo.current.type = "sine"));
                 break;
             default:
-                setType((lfo.lfo.current.type = "square"));
+                setType((props.lfo.current.type = "square"));
         }
     }
-
+    console.log("lfo:", props.lfoState);
     return (
         <>
             <Card style={{ width: "12rem" }} className="module-container">
                 <Card.Body className="text-center">
-                    <Card.Title>Tone.js LFO</Card.Title>
+                    <Card.Title>LFO {props.lfoState}</Card.Title>
                     <ButtonGroup size="sm">
                         <Button
                             className="osc-btn"
@@ -57,6 +70,28 @@ function TonejsLFO(lfo: any) {
                         >
                             {type}
                         </Button>
+                        <DropdownButton
+                            as={ButtonGroup}
+                            title=""
+                            id="bg-nested-dropdown"
+                        >
+                            <Dropdown.Item
+                                onClick={() => {
+                                    props.oscStop();
+                                    props.setLfoState("oscFreq");
+                                }}
+                            >
+                                Osc freq
+                            </Dropdown.Item>
+                            <Dropdown.Item
+                                onClick={() => {
+                                    props.oscStop();
+                                    props.setLfoState("filterFreq");
+                                }}
+                            >
+                                Filter freq
+                            </Dropdown.Item>
+                        </DropdownButton>
                     </ButtonGroup>
                     <ListGroup.Item>
                         <label className="form-label" htmlFor="frequency">
