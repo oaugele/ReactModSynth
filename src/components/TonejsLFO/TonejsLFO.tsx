@@ -57,7 +57,7 @@ function TonejsLFO(props: lfoProps) {
     console.log("lfo:", props.lfoState);
     return (
         <>
-            <Card style={{ width: "12rem" }} className="module-container">
+            <Card style={{ width: "16rem" }} className="module-container">
                 <Card.Body className="text-center">
                     <Card.Title>LFO {props.lfoState}</Card.Title>
                     <ButtonGroup size="sm">
