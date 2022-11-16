@@ -12,7 +12,7 @@ function TonejsOscillator(osc: any) {
     let [freq, setFreq] = useState(50);
     let [freqSlider, setFreqSlider] = useState(freq);
     let [detune, setDetune] = useState(0);
-    let [vol, setVol] = useState(-6);
+    let [vol, setVol] = useState(-12);
 
     useEffect(() => {}, []);
 
@@ -56,7 +56,7 @@ function TonejsOscillator(osc: any) {
         <>
             <Card style={{ width: "16rem" }} className="module-container">
                 <Card.Body className="text-center">
-                    <Card.Title>Tone.js Oscillator</Card.Title>
+                    <Card.Title>Oscillator</Card.Title>
                     <ButtonGroup size="sm">
                         <Button
                             className="osc-btn"

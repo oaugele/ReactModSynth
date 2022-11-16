@@ -73,7 +73,7 @@ function TonejsFilter(filter: any) {
         <>
             <Card style={{ width: "16rem" }} className="module-container">
                 <Card.Body className="text-center">
-                    <Card.Title>Tone.js Filter</Card.Title>
+                    <Card.Title>Filter</Card.Title>
                     <ButtonGroup size="sm">
                         <Button
                             className="osc-btn"

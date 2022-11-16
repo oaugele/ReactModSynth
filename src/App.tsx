@@ -166,13 +166,6 @@ function App() {
                                 >
                                     LFO
                                 </NavDropdown.Item>
-                                <NavDropdown.Item
-                                    onClick={() => {
-                                        oscStop();
-                                    }}
-                                >
-                                    Filter freq
-                                </NavDropdown.Item>
                                 <NavDropdown.Divider />
                             </NavDropdown>
                         </Nav>

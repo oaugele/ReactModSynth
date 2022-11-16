@@ -18,9 +18,8 @@ interface lfoProps {
 }
 
 function TonejsLFO(props: lfoProps) {
-    //let [lfoState, setlfoState] = useState("oscFreq");
     let [type, setType] = useState("sine");
-    let [freq, setFreq] = useState(50);
+    let [freq, setFreq] = useState(2);
     let [freqSlider, setFreqSlider] = useState(freq);
 
     useEffect(() => {
@@ -103,7 +102,7 @@ function TonejsLFO(props: lfoProps) {
                             type="range"
                             className="form-range"
                             id="freqSlider"
-                            min="0.5"
+                            min="0"
                             max="4000"
                             onChange={changeFreq}
                         />
