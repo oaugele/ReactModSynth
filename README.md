@@ -8,7 +8,7 @@ It allows the user to patch and play his own synthesizer in the webbrowser.
 - Filter
 - LFO
 
-### Used librarys
+### Used libraries
 - React.js
 - Typescript
 - Tone.js https://tonejs.github.io
