@@ -14,4 +14,4 @@ It allows the user to patch and play his own synthesizer in the webbrowser.
 - Tone.js https://tonejs.github.io
 - React Bootstrap 5 https://react-bootstrap.github.io/
 
-
+Demo: https://rm-synth.onrender.com/
